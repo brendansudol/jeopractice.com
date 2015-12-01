@@ -1,0 +1,1 @@
+web: gunicorn jeopractice.wsgi --log-file -
