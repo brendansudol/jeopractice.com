@@ -8,7 +8,6 @@ __pycache__/
 *.swp
 *.log
 
-data
 node_modules
 secrets
 venv
