@@ -16,7 +16,7 @@ class Question(ModelBase):
     category = models.CharField(max_length=256)
     question = models.CharField(max_length=1024)
     answer = models.CharField(max_length=512)
-    value = models.PositiveIntegerField()
+    amount = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
-        unique_together = ('show_number', 'category', 'answer')
+        unique_together = ('show_number', 'category', 'answer', 'amount')
