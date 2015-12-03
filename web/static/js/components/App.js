@@ -23,8 +23,7 @@ var Nav = React.createClass({
     },
   ],
 
-  clickHandler: function(e) {
-    var btn = e.target.getAttribute("data-id");
+  clickHandler: function(btn, e) {
     this.props.onClick(btn);
   },
 
@@ -42,7 +41,7 @@ var Nav = React.createClass({
                   type="button" 
                   className="btn bg-darken-2 icon-button ml1"
                   data-id={a.arrow}
-                  onClick={self.clickHandler}
+                  onClick={self.clickHandler.bind(self, a.arrow)}
                 >
                   <svg className="icon" data-icon={a.arrow} viewBox="0 0 32 32" fill="#fff">
                     <path d={a.svg}></path>
