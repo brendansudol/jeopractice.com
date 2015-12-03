@@ -1,3 +1,7 @@
+body {
+    background-color: $jeopardy-blue;
+}
+
 body,
 h1,
 h2,
@@ -12,5 +16,4 @@ h6,
 .h5,
 .h6 {
     font-family: $font-family;
-    color: $dark-gray;
 }

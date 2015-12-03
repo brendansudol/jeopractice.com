@@ -1,3 +1,19 @@
+/*
+ * styles
+ */
+
 require('../sass/app.scss');
 
-// require('./modules/FILL_IN');
+
+/*
+ * js
+ */
+
+var React = require('react');
+var App = require('./components/App.js');
+
+
+React.render(
+    <App />, 
+    document.getElementById('main')
+);
