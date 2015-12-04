@@ -1,3 +1,7 @@
+html {
+  font-size: $base-font-size;
+}
+
 body {
     background-color: $jeopardy-blue;
 }
@@ -16,4 +20,8 @@ h6,
 .h5,
 .h6 {
     font-family: $font-family;
+}
+
+.container {
+    max-width: 44em;
 }

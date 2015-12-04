@@ -67,7 +67,7 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
-    document.body.onkeydown = this.handleKeyDown;
+    document.body.onkeydown = this.keyPress;
 
     var self = this;
     $.get('/data', function(data) {
@@ -76,7 +76,7 @@ var App = React.createClass({
     });
   },
 
-  handleKeyDown: function(e) {
+  keyPress: function(e) {
     var whitelist = {
       38: 'up',
       40: 'down',
@@ -133,16 +133,16 @@ var App = React.createClass({
 
     return (
       <div>
-        <div className="clearfix mb3">
-          <div className="left caps">{q.category}</div>
-          <div className="right">${q.amount}</div>
+        <div className="clearfix mb3 h3">
+          <div className="sm-col mb1 caps">{q.category}</div>
+          <div className="sm-col-right">${q.amount}</div>
         </div>
         <div 
           className="question mb2 h1 bold" 
           dangerouslySetInnerHTML={{__html: q.question}} 
         />
-        <div className={"h2 answer " + (this.state.showAnswer ? "" : "display-none")}>
-          A: {q.answer}
+        <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
+          {q.answer}
         </div>
         <div className="absolute bottom-0 left-0 z1 p1 m1">
           <button type="button" className="btn bg-darken-2" onClick={this.toggleAnswer}>
