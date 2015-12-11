@@ -10,7 +10,9 @@ require('../sass/app.scss');
  */
 
 var React = require('react');
-var App = require('./components/App.js');
+var App = require('./components/App.jsx');
+
+require('./vendor/tooltip');
 
 
 React.render(
