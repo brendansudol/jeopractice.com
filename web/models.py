@@ -1,5 +1,7 @@
+from bs4 import BeautifulSoup
 from collections import defaultdict
 from django.db import models
+from textwrap import dedent
 
 
 class ModelBase(models.Model):
@@ -22,12 +24,41 @@ class Question(ModelBase):
     class Meta:
         unique_together = ('show_number', 'category', 'answer', 'amount')
 
+    @property
+    def question_clean(self):
+        soup = BeautifulSoup(self.question)
+        a = soup.a
+
+        if not a or 'mp3' not in a.get('href'):
+            return self.question
+
+        html = '''
+        <div>{}</div>
+        <audio controls>
+          <source src="{}" type="audio/mpeg">
+        </audio>
+        '''.format(a.text, a.get('href'))
+
+        return dedent(html)
+
+    def to_dict(self):
+        return {
+            'air_date': self.air_date,
+            'show_number': self.show_number,
+            'round': self.round,
+            'category': self.category,
+            'question': self.question_clean,
+            'answer': self.answer,
+            'amount': self.amount,
+        }
+
     @classmethod
     def get_game(cls, show_number):
-        questions = cls.objects.filter(show_number=show_number).values()
+        questions = cls.objects.filter(show_number=show_number)
 
         by_category = defaultdict(list)
         for question in questions:
-            by_category[question['category']].append(question)
+            q = question.to_dict()
+            by_category[q['category']].append(q)
 
         return dict(by_category)
