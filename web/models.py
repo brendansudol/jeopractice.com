@@ -23,7 +23,7 @@ class Question(ModelBase):
         unique_together = ('show_number', 'category', 'answer', 'amount')
 
     @classmethod
-    def get_game(cls, show_number=4680):
+    def get_game(cls, show_number):
         questions = cls.objects.filter(show_number=show_number).values()
 
         by_category = defaultdict(list)

@@ -9,7 +9,7 @@ var Nav = require('./Nav.jsx');
 var App = React.createClass({
     getInitialState: function() {
         return {
-            id: null,
+            id: 4680,
             game: [],
             x: 0,
             y: 0,
