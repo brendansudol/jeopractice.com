@@ -10,7 +10,7 @@ var App = React.createClass({
     getInitialState: function() {
         return {
             id: 4680,
-            game: [],
+            questions: [],
             x: 0,
             y: 0,
             showAnswer: false,
@@ -61,10 +61,8 @@ var App = React.createClass({
 
         var self = this;
         $.get(url, function(data) {
-            var game = {
-                game: _.values(data.game)
-            };
-            self.setState(_.assign(params, game));
+            var questions = {questions: data.game};
+            self.setState(_.assign(params, questions));
         });
     },
 
@@ -91,11 +89,11 @@ var App = React.createClass({
     },
 
     navClick: function(id) {
-        var game = this.state.game,
+        var questions = this.state.questions,
             pos = this.updatePosition(id);
 
-        if (game[pos.x] === undefined ||
-            game[pos.x][pos.y] === undefined
+        if (questions[pos.x] === undefined ||
+            questions[pos.x][pos.y] === undefined
         ) {
             return;
         }
@@ -120,11 +118,11 @@ var App = React.createClass({
     },
 
     render: function() {
-        var game = this.state.game;
+        var questions = this.state.questions;
 
-        if (!game.length) return null;
+        if (!questions.length) return null;
 
-        var q = game[this.state.x][this.state.y];
+        var q = questions[this.state.x][this.state.y];
 
         return (
         <div>

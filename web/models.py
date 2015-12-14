@@ -26,6 +26,12 @@ class Question(ModelBase):
     class Meta:
         unique_together = ('show_number', 'category', 'answer', 'amount')
 
+    ROUNDS = {
+        'Jeopardy!': 1,
+        'Double Jeopardy!': 2,
+        'Final Jeopardy!': 3,
+    }
+
     @property
     def question_clean(self):
         soup = BeautifulSoup(self.question)
@@ -73,10 +79,20 @@ class Question(ModelBase):
     @classmethod
     def get_game(cls, show_number):
         questions = cls.objects.filter(show_number=show_number)
+        grouped = defaultdict(list)
 
-        by_category = defaultdict(list)
         for question in questions:
-            q = question.to_dict()
-            by_category[q['category']].append(q)
+            key = '{}-{}'.format(
+                cls.ROUNDS.get(question.round, 0),
+                question.category
+            )
+            grouped[key].append(question.to_dict())
 
-        return dict(by_category)
+        results = [
+            x[1] for x in sorted(
+                grouped.items(),
+                key=lambda x: x[0]
+            )
+        ]
+
+        return results
