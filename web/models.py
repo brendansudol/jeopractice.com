@@ -3,6 +3,8 @@ import re
 from bs4 import BeautifulSoup
 from collections import defaultdict
 from django.db import models
+from django.db.models import Max
+from random import randint
 from textwrap import dedent
 
 
@@ -14,6 +16,36 @@ class ModelBase(models.Model):
         abstract = True
 
 
+class QuestionManager(models.Manager):
+    def get_random_show(self):
+        _max = self.aggregate(Max('id'))['id__max']
+        while True:
+            try:
+                return self.get(pk=randint(1, _max)).show_number
+            except Exception:
+                pass
+
+    def fetch_show(self, show_number):
+        questions = self.filter(show_number=show_number)
+        grouped = defaultdict(list)
+
+        for question in questions:
+            key = '{}-{}'.format(
+                self.model.ROUNDS.get(question.round, 0),
+                question.category
+            )
+            grouped[key].append(question.to_dict())
+
+        results = [
+            x[1] for x in sorted(
+                grouped.items(),
+                key=lambda x: x[0]
+            )
+        ]
+
+        return results
+
+
 class Question(ModelBase):
     air_date = models.DateField(db_index=True)
     show_number = models.PositiveIntegerField(db_index=True)
@@ -22,6 +54,8 @@ class Question(ModelBase):
     question = models.CharField(max_length=1024)
     answer = models.CharField(max_length=512)
     amount = models.PositiveIntegerField(blank=True, null=True)
+
+    objects = QuestionManager()
 
     class Meta:
         unique_together = ('show_number', 'category', 'answer', 'amount')
@@ -75,24 +109,3 @@ class Question(ModelBase):
             'answer': self.answer,
             'amount': self.amount_clean,
         }
-
-    @classmethod
-    def get_game(cls, show_number):
-        questions = cls.objects.filter(show_number=show_number)
-        grouped = defaultdict(list)
-
-        for question in questions:
-            key = '{}-{}'.format(
-                cls.ROUNDS.get(question.round, 0),
-                question.category
-            )
-            grouped[key].append(question.to_dict())
-
-        results = [
-            x[1] for x in sorted(
-                grouped.items(),
-                key=lambda x: x[0]
-            )
-        ]
-
-        return results
