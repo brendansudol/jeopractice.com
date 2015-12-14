@@ -9,9 +9,7 @@ require('../sass/app.scss');
  * js
  */
 
-var $ = require('jquery');
 var React = require('react');
-
 var App = require('./components/App.jsx');
 
 require('./vendor/modal');

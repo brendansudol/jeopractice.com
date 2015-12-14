@@ -1,3 +1,5 @@
+import re
+
 from bs4 import BeautifulSoup
 from collections import defaultdict
 from django.db import models
@@ -27,19 +29,32 @@ class Question(ModelBase):
     @property
     def question_clean(self):
         soup = BeautifulSoup(self.question)
-        a = soup.a
+        txt = re.sub('\s+', ' ', soup.get_text()).strip()
 
-        if not a or 'mp3' not in a.get('href'):
-            return self.question
+        if not soup.a or 'mp3' not in soup.a.get('href'):
+            return txt
 
         html = '''
         <div>{}</div>
         <audio controls>
           <source src="{}" type="audio/mpeg">
         </audio>
-        '''.format(a.text, a.get('href'))
+        '''.format(txt, soup.a.get('href'))
 
         return dedent(html)
+
+    @property
+    def amount_clean(self):
+        amt = self.amount
+
+        if not amt:
+            return ''
+
+        # try to filter out double jeps
+        if amt % 200 != 0 or amt > 2000:
+            return 'DD'
+
+        return "${:,}".format(amt)
 
     def to_dict(self):
         return {
@@ -49,7 +64,7 @@ class Question(ModelBase):
             'category': self.category,
             'question': self.question_clean,
             'answer': self.answer,
-            'amount': self.amount,
+            'amount': self.amount_clean,
         }
 
     @classmethod

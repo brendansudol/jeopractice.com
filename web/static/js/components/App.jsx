@@ -94,8 +94,8 @@ var App = React.createClass({
         var game = this.state.game,
             pos = this.updatePosition(id);
 
-        if (game[pos.x] == undefined ||
-            game[pos.x][pos.y] == undefined
+        if (game[pos.x] === undefined ||
+            game[pos.x][pos.y] === undefined
         ) {
             return;
         }
@@ -127,25 +127,25 @@ var App = React.createClass({
         var q = game[this.state.x][this.state.y];
 
         return (
-            <div>
-        <div className="clearfix mb3 h3">
-          <div className="sm-col mb1 caps">{q.category}</div>
-          <div className="sm-col-right">${q.amount}</div>
+        <div>
+            <div className="clearfix mb3 h3">
+              <div className="sm-col mb1 caps">{q.category}</div>
+              <div className="sm-col-right">{q.amount}</div>
+            </div>
+            <div 
+              className="question mb2 h1 bold" 
+              dangerouslySetInnerHTML={{__html: q.question}} 
+            />
+            <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
+              {q.answer}
+            </div>
+            <div className="absolute bottom-0 left-0 z1 p1 m1">
+              <button type="button" className="btn bg-darken-2" onClick={this.toggleAnswer}>
+                Answer
+              </button>
+            </div>
+            <Nav onClick={this.navClick} />
         </div>
-        <div 
-          className="question mb2 h1 bold" 
-          dangerouslySetInnerHTML={{__html: q.question}} 
-        />
-        <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
-          {q.answer}
-        </div>
-        <div className="absolute bottom-0 left-0 z1 p1 m1">
-          <button type="button" className="btn bg-darken-2" onClick={this.toggleAnswer}>
-            Answer
-          </button>
-        </div>
-        <Nav onClick={this.navClick} />
-      </div>
         );
     }
 });
