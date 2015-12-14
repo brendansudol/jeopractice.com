@@ -8,6 +8,7 @@ __pycache__/
 *.swp
 *.log
 
+data/questions-all.json
 node_modules
 secrets
 venv

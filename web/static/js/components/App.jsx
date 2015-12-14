@@ -128,8 +128,8 @@ var App = React.createClass({
 
         return (
         <div>
-            <div className="clearfix mb3 h3">
-              <div className="sm-col mb1 caps">{q.category}</div>
+            <div className="clearfix mb3 h3 caps">
+              <div className="sm-col mb1">{q.category}</div>
               <div className="sm-col-right">{q.amount}</div>
             </div>
             <div 
@@ -139,12 +139,10 @@ var App = React.createClass({
             <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
               {q.answer}
             </div>
-            <div className="absolute bottom-0 left-0 z1 p1 m1">
-              <button type="button" className="btn bg-darken-2" onClick={this.toggleAnswer}>
-                Answer
-              </button>
+            <div className="absolute bottom-0 left-0 z1 p1 m1 md-show">
+              <div className="caps h6 p1">{q.round}</div>
             </div>
-            <Nav onClick={this.navClick} />
+            <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />
         </div>
         );
     }

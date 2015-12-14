@@ -47,6 +47,9 @@ class Question(ModelBase):
     def amount_clean(self):
         amt = self.amount
 
+        if self.round == 'Final Jeopardy!':
+            return 'Final'
+
         if not amt:
             return ''
 
