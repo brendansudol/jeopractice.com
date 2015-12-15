@@ -25,14 +25,16 @@
       <div class="left">
         <a href="/" class="btn yellow bold caps py2">Jeopractice (WIP)</a>
       </div>
+      {% if show %}
       <div class="right">
-        <a href="/" class="mt1 mb1 mr1 btn btn-primary yellow" data-toggle="tooltip" data-placement="bottom" title="Tooltip words">#1232</a>
+        <a href="/" class="mt1 mb1 mr1 btn btn-primary yellow" data-toggle="tooltip" data-placement="bottom" title="Tooltip words">#{{ show }}</a>
         <a href="/" class="mt1 mb1 mr1 btn btn-primary yellow" data-toggle="tooltip" data-placement="bottom" title="Tooltip words">
           <svg class="icon ico-yellow" viewBox="0 0 32 32">
             <path d="M16 2 A14 14 0 0 0 2 16 A14 14 0 0 0 16 30 A14 14 0 0 0 26 26 L 23.25 23 A10 10 0 0 1 16 26 A10 10 0 0 1 6 16 A10 10 0 0 1 16 6 A10 10 0 0 1 23.25 9 L19 13 L30 13 L30 2 L26 6 A14 14 0 0 0 16 2"></path>
           </svg>
         </a>
       </div>
+      {% endif %}
     </nav>
     <div class="container px1 py3">
       {% block content %}{% endblock %}
