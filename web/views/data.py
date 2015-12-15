@@ -6,6 +6,6 @@ from web.models import Question
 
 class DataView(View):
     def get(self, request):
-        gid = request.GET.get('id', 4680)
-        game = Question.objects.fetch_show(gid)
-        return JsonResponse({'game': game})
+        show_id = request.GET.get('id')
+        questions = Question.objects.fetch_show(show_id)
+        return JsonResponse({'questions': questions})

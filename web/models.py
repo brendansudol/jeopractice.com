@@ -2,6 +2,7 @@ import re
 
 from bs4 import BeautifulSoup
 from collections import defaultdict
+from datetime import date
 from django.db import models
 from django.db.models import Max
 from random import randint
@@ -93,8 +94,11 @@ class Question(ModelBase):
         if not amt:
             return ''
 
+        # clue values doubled on 11/26/01
+        scalar = 2 if self.air_date >= date(2001, 11, 26) else 1
+
         # try to filter out double jeps
-        if amt % 200 != 0 or amt > 2000:
+        if amt % (100 * scalar) != 0 or amt > (1000 * scalar):
             return 'DD'
 
         return "${:,}".format(amt)

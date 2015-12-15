@@ -9,7 +9,7 @@ var Nav = require('./Nav.jsx');
 var App = React.createClass({
     getInitialState: function() {
         return {
-            id: 4680,
+            id: null,
             questions: [],
             x: 0,
             y: 0,
@@ -34,6 +34,8 @@ var App = React.createClass({
             y: this.state.y,
         });
 
+        console.log(params);
+
         window.history.pushState(this.state, '', '?' + params);
     },
 
@@ -41,13 +43,13 @@ var App = React.createClass({
         var params = window.location.search.replace(/^\?|\/$/g, ''),
             params_obj = qs.parse(params),
             cleaned = {};
-        
+
         _.forEach(params_obj, function(val, key) {
-          var num = parseInt(val);
-          if (_.isFinite(num) && 
-              _.includes(['x', 'y', 'id'], key)) {
-            cleaned[key] = num;
-          }
+            var num = parseInt(val);
+            if (_.isFinite(num) &&
+                _.includes(['x', 'y', 'id'], key)) {
+                cleaned[key] = num;
+            }
         });
 
         return cleaned;
@@ -56,13 +58,15 @@ var App = React.createClass({
     fetchGame: function(params) {
         if (!params) params = {};
 
-        var url = '/data';
-        if (params.id) url += ('?id=' + params.id);
+        var id = params.id || $('#show-num').data('id'),
+            url = '/data?id=' + id;
 
         var self = this;
         $.get(url, function(data) {
-            var questions = {questions: data.game};
-            self.setState(_.assign(params, questions));
+            self.setState(_.assign(params, {
+                id: id,
+                questions: data.questions
+            }), self.updateUrl);
         });
     },
 
@@ -127,18 +131,18 @@ var App = React.createClass({
         return (
         <div>
             <div className="clearfix mb3 h3 caps">
-              <div className="sm-col mb1">{q.category}</div>
-              <div className="sm-col-right">{q.amount}</div>
+                <div className="sm-col mb1">{q.category}</div>
+                <div className="sm-col-right">{q.amount}</div>
             </div>
             <div 
-              className="question mb2 h1 bold" 
-              dangerouslySetInnerHTML={{__html: q.question}} 
+                className="question mb2 h1 bold" 
+                dangerouslySetInnerHTML={{__html: q.question}} 
             />
             <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
-              {q.answer}
+                {q.answer}
             </div>
             <div className="absolute bottom-0 left-0 z1 p1 m1 md-show">
-              <div className="caps h6 p1">{q.round}</div>
+                <div className="caps h6 p1">{q.round}</div>
             </div>
             <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />
         </div>
