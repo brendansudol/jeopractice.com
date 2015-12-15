@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    default_filename = 'data/questions-chunk1.json'
+    default_filename = 'data/questions-all.json'
     batch_size = 1000
 
     def add_arguments(self, parser):
@@ -66,7 +66,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def chunks(l, n):
-        return [l[i:i+n] for i in range(0, len(l), n)]
+        return [l[i:i + n] for i in range(0, len(l), n)]
 
     @staticmethod
     def parse_int(x):
