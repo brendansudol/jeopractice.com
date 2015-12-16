@@ -18,11 +18,11 @@ class ModelBase(models.Model):
 
 
 class QuestionManager(models.Manager):
-    def get_random_show(self):
+    def random(self):
         _max = self.aggregate(Max('id'))['id__max']
         while True:
             try:
-                return self.get(pk=randint(1, _max)).show_number
+                return self.get(pk=randint(1, _max))
             except Exception:
                 pass
 

@@ -8,20 +8,18 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['show'] = self.get_show()
+        context['random_q'] = self.get_question() or Question.objects.random()
         return context
 
-    def get_show(self):
+    def get_question(self):
         show_id = self.request.GET.get('id')
 
-        if not show_id or not self.is_show_valid(show_id):
-            show_id = Question.objects.get_random_show()
+        if not show_id:
+            return
 
-        return show_id
-
-    def is_show_valid(self, show_id):
         try:
             q = Question.objects.filter(show_number=show_id)
-            return q.exists()
         except Exception:
-            return False
+            return
+
+        return q.first()

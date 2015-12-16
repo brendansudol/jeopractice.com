@@ -23,12 +23,12 @@
   <body>
     <nav class="clearfix mb2 bg-darken-2">
       <div class="left">
-        <a href="/" class="btn yellow bold caps py2 h3">Jeopractice</a>
+        <a href="/" class="btn yellow bold caps py2 h4">Jeopractice</a>
       </div>
-      {% if show %}
+      {% if random_q %}
       <div class="right">
-        <div class="mt1 mb1 mr1 btn btn-primary yellow" id="show-num" data-id="{{ show }}">
-          #{{ show }}
+        <div class="mt1 mb1 mr1 btn btn-primary yellow h5" id="show-num" data-id="{{ random_q.show_number }}">
+          {{ random_q.air_date }}
         </div>
         <a href="/" class="mt1 mb1 mr1 btn btn-primary yellow">
           <svg class="icon ico-yellow" viewBox="0 0 32 32">
