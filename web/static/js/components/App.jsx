@@ -136,13 +136,17 @@ var App = React.createClass({
                 className="question mb2 h1 bold" 
                 dangerouslySetInnerHTML={{__html: q.question}} 
             />
-            <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
+            <div 
+                className={"mb2 h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}
+            >
                 {q.answer}
             </div>
-            <div className="fixed bottom-0 left-0 z1 p1 m1 md-show">
-                <div className="caps h6 p1">{q.round}</div>
+            <div className="fixed clearfix bottom-0 left-0 right-0 z1 p1">
+                <div className="left md-show">
+                    <div className="btn caps h6 p1">{q.round}</div>
+                </div>
+                <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />
             </div>
-            <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />
         </div>
         );
     }

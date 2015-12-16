@@ -28,7 +28,7 @@ var Nav = React.createClass({
         var self = this;
 
         return (
-        <div className="fixed bottom-0 right-0 z1 p1 m1">
+        <div className="right">
             <button type="button" className="btn bg-darken-2" onClick={this.answerClick}>
                 Answer
             </button>
