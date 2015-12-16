@@ -28,27 +28,25 @@ var Nav = React.createClass({
         var self = this;
 
         return (
-        <div className="jeop-nav-holder">
-            <div id="grid-controls" className="absolute bottom-0 right-0 z1 p1 m1">
-              <button type="button" className="btn bg-darken-2" onClick={this.answerClick}>
+        <div className="fixed bottom-0 right-0 z1 p1 m1">
+            <button type="button" className="btn bg-darken-2" onClick={this.answerClick}>
                 Answer
-              </button>
-              {self.arrows.map(function(a) {
+            </button>
+                {self.arrows.map(function(a) {
                 return (
-                  <button 
-                    key={a.arrow}
-                    type="button" 
-                    className="btn bg-darken-2 icon-button ml1"
-                    data-id={a.arrow}
-                    onClick={self.clickHandler.bind(self, a.arrow)}
-                  >
-                    <svg className="icon" data-icon={a.arrow} viewBox="0 0 32 32" fill="#fff">
-                      <path d={a.svg}></path>
-                    </svg>
-                  </button>
+                    <button 
+                        key={a.arrow}
+                        type="button" 
+                        className="btn bg-darken-2 icon-button ml1"
+                        data-id={a.arrow}
+                        onClick={self.clickHandler.bind(self, a.arrow)}
+                    >
+                        <svg className="icon" data-icon={a.arrow} viewBox="0 0 32 32" fill="#fff">
+                            <path d={a.svg}></path>
+                        </svg>
+                    </button>
                 );
-              })}
-            </div>
+            })}
         </div>
         );
     }

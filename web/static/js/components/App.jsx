@@ -34,8 +34,6 @@ var App = React.createClass({
             y: this.state.y,
         });
 
-        console.log(params);
-
         window.history.pushState(this.state, '', '?' + params);
     },
 
@@ -141,7 +139,7 @@ var App = React.createClass({
             <div className={"h1 bold yellow " + (this.state.showAnswer ? "" : "display-none")}>
                 {q.answer}
             </div>
-            <div className="absolute bottom-0 left-0 z1 p1 m1 md-show">
+            <div className="fixed bottom-0 left-0 z1 p1 m1 md-show">
                 <div className="caps h6 p1">{q.round}</div>
             </div>
             <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />

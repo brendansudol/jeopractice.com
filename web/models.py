@@ -85,6 +85,10 @@ class Question(ModelBase):
         return dedent(html)
 
     @property
+    def answer_clean(self):
+        return self.answer.replace('\\', '')
+
+    @property
     def amount_clean(self):
         amt = self.amount
 
@@ -110,6 +114,6 @@ class Question(ModelBase):
             'round': self.round,
             'category': self.category,
             'question': self.question_clean,
-            'answer': self.answer,
+            'answer': self.answer_clean,
             'amount': self.amount_clean,
         }
