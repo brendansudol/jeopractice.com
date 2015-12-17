@@ -24,8 +24,22 @@ var Nav = React.createClass({
         this.props.toggleAnswer();
     },
 
+    movability: function(pos) {
+        var x = pos[0],
+            y = pos[1],
+            move = {up: true, down: true, left: true, right: true};
+
+        if (x === 0) move.left = false;
+        if (x >= 12) move.right = false;
+        if (y === 0) move.up = false;
+        if (y >= 4 || (x === 12 && y === 0)) move.down = false;
+
+        return move;
+    },
+
     render: function() {
-        var self = this;
+        var self = this,
+            move = this.movability(this.props.pos);
 
         return (
         <div className="right">
@@ -38,8 +52,8 @@ var Nav = React.createClass({
                         key={a.arrow}
                         type="button" 
                         className="btn bg-darken-2 icon-button ml1"
-                        data-id={a.arrow}
                         onClick={self.clickHandler.bind(self, a.arrow)}
+                        disabled={!move[a.arrow]}
                     >
                         <svg className="icon" data-icon={a.arrow} viewBox="0 0 32 32" fill="#fff">
                             <path d={a.svg}></path>

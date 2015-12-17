@@ -4,6 +4,11 @@
     padding-right: 0;
 }
 
+.icon-button:disabled,
+.icon-button.is-disabled {
+  opacity: .5;
+}
+
 .icon {
     width: 0.85rem;
     height: 0.85rem;

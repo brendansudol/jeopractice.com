@@ -108,23 +108,30 @@ var App = React.createClass({
     },
 
     updatePosition: function(direction) {
-        var x = this.state.x,
+        var questions = this.state.questions,
+            x = this.state.x,
             y = this.state.y;
 
         if (direction == 'up') y -= 1;
         if (direction == 'down') y += 1;
         if (direction == 'left') x -= 1;
-        if (direction == 'right') x += 1;
+
+        // special case (if navigating to final jep)
+        if (direction == 'right') {
+            x += 1;
+            if (x == questions.length - 1) y = 0;
+        }
 
         return {x: x, y: y};
     },
 
     render: function() {
-        var questions = this.state.questions;
+        var questions = this.state.questions,
+            pos = [this.state.x, this.state.y];
 
         if (!questions.length) return null;
 
-        var q = questions[this.state.x][this.state.y];
+        var q = questions[pos[0]][pos[1]];
 
         return (
         <div>
@@ -145,7 +152,10 @@ var App = React.createClass({
                 <div className="left md-show">
                     <div className="btn caps h6 p1">{q.round}</div>
                 </div>
-                <Nav onClick={this.navClick} toggleAnswer={this.toggleAnswer} />
+                <Nav pos={pos}
+                     onClick={this.navClick}
+                     toggleAnswer={this.toggleAnswer} 
+                />
             </div>
         </div>
         );
