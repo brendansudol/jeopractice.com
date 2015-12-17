@@ -15,3 +15,13 @@
     font-size: 20px;
   }
 }
+
+.md-inline-show {
+  display: none !important
+}
+
+@media (min-width: $viewport-medium) {
+    .md-inline-show {
+        display: inline-block !important;
+    }
+}
