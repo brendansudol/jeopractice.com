@@ -22,7 +22,7 @@
   </head>
   <body>
     <nav class="clearfix mb2 bg-darken-2">
-      <div class="left">
+      <div class="{% if random_q %}left{% else %}center{% endif %}">
         <a href="/" class="btn yellow bold caps py2 h4">Jeopractice</a>
       </div>
       {% if random_q %}
