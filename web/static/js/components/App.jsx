@@ -92,7 +92,7 @@ var App = React.createClass({
 
     navClick: function(id) {
         var questions = this.state.questions,
-            pos = this.updatePosition(id);
+            pos = this.getNewPosition(id);
 
         if (questions[pos.x] === undefined ||
             questions[pos.x][pos.y] === undefined
@@ -100,14 +100,10 @@ var App = React.createClass({
             return;
         }
 
-        this.setState({
-            x: pos.x,
-            y: pos.y,
-            showAnswer: false
-        }, this.updateUrl);
+        this.updatePosition(pos);
     },
 
-    updatePosition: function(direction) {
+    getNewPosition: function(direction) {
         var questions = this.state.questions,
             x = this.state.x,
             y = this.state.y;
@@ -122,7 +118,18 @@ var App = React.createClass({
             if (x == questions.length - 1) y = 0;
         }
 
-        return {x: x, y: y};
+        return {
+            x: x,
+            y: y
+        };
+    },
+
+    updatePosition: function(pos) {
+        this.setState({
+            x: pos.x,
+            y: pos.y,
+            showAnswer: false
+        }, this.updateUrl);
     },
 
     render: function() {
@@ -134,7 +141,7 @@ var App = React.createClass({
         var q = questions[pos[0]][pos[1]];
 
         return (
-        <div>
+            <div>
             <div className="clearfix mb3 h3 caps">
                 <div className="sm-col mb1">{q.category}</div>
                 <div className="sm-col-right">{q.amount}</div>
@@ -155,6 +162,7 @@ var App = React.createClass({
                 <Nav pos={pos}
                      onClick={this.navClick}
                      toggleAnswer={this.toggleAnswer} 
+                     updatePosition={this.updatePosition}
                 />
             </div>
         </div>
